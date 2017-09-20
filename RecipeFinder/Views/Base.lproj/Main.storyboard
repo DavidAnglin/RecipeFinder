@@ -111,7 +111,11 @@
                                     <constraint firstAttribute="bottomMargin" secondItem="LyV-H1-URa" secondAttribute="bottom" id="ZX5-Bp-uOc"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="b2C-Ql-Ijj" kind="show" identifier="showDetail" id="c82-Ub-8V6"/>
+                                    <outlet property="calorieCountLabel" destination="Z5c-8D-07S" id="Qyd-8H-EKO"/>
+                                    <outlet property="ingredientCountLabel" destination="OVT-Td-sMq" id="ToL-4U-ATE"/>
+                                    <outlet property="recipeImage" destination="ti3-KK-UQo" id="9Uc-qs-jMo"/>
+                                    <outlet property="recipeNameLabel" destination="mol-Uo-YKm" id="Zfu-6C-Thb"/>
+                                    <segue destination="b2C-Ql-Ijj" kind="show" identifier="showRecipeDetail" id="c82-Ub-8V6"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -130,10 +134,10 @@
         <scene sceneID="LzP-un-eBm">
             <objects>
                 <tableViewController id="b2C-Ql-Ijj" customClass="RecipeDetailViewController" customModule="RecipeFinder" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" sectionIndexMinimumDisplayRowCount="1" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="cpu-gd-alN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" sectionIndexMinimumDisplayRowCount="4" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cpu-gd-alN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Jb3-la-xmT">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="385"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -164,6 +168,9 @@
                                                     <state key="normal" title="David Lebovitz">
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="goToFullRecipe:" destination="b2C-Ql-Ijj" eventType="touchUpInside" id="WM1-az-lbc"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
@@ -224,22 +231,30 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IngredientCell" textLabel="bv6-eo-qcq" style="IBUITableViewCellStyleDefault" id="62t-Fy-vFF">
-                                <rect key="frame" x="0.0" y="440.5" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IngredientCell" rowHeight="80" id="62t-Fy-vFF" customClass="IngredientCell" customModule="RecipeFinder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="413" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="62t-Fy-vFF" id="KQ1-z4-IA9">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bv6-eo-qcq">
-                                            <rect key="frame" x="16" y="0.0" width="344" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="One 2-inch (5cm) piece of fresh ginger, peeled and grated" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lo0-X7-0zF">
+                                            <rect key="frame" x="5.5" y="19.5" width="363" height="41"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Lo0-X7-0zF" firstAttribute="centerX" secondItem="KQ1-z4-IA9" secondAttribute="centerX" id="FUf-Ua-owN"/>
+                                        <constraint firstItem="Lo0-X7-0zF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KQ1-z4-IA9" secondAttribute="leading" id="M5k-Wl-JIX"/>
+                                        <constraint firstItem="Lo0-X7-0zF" firstAttribute="centerY" secondItem="KQ1-z4-IA9" secondAttribute="centerY" id="Q3R-H1-dlX"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Lo0-X7-0zF" secondAttribute="trailing" id="cfQ-LY-UWq"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="ingredientLabel" destination="Lo0-X7-0zF" id="kNA-Np-XTc"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -247,6 +262,13 @@
                             <outlet property="delegate" destination="b2C-Ql-Ijj" id="3Zm-Vw-g6Z"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="calorieLabel" destination="I4y-y0-6jU" id="EPE-Fr-0Vc"/>
+                        <outlet property="recipeImage" destination="lxD-fd-CPY" id="gOZ-oz-I5D"/>
+                        <outlet property="recipeLabel" destination="by8-gM-8vI" id="AZa-8g-CPm"/>
+                        <outlet property="recipeLink" destination="TuQ-dh-3Q2" id="vgU-1m-Xyt"/>
+                        <outlet property="servingLabel" destination="EYM-TA-YOP" id="lpj-91-iJm"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G8m-PT-tvt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

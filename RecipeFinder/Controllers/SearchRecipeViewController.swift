@@ -10,28 +10,35 @@ import UIKit
 
 class SearchRecipeViewController: UICollectionViewController {
 
+    // MARK: - Constants -
     let searchController = UISearchController(searchResultsController: nil)
-    
     let datasSource = SearchRecipesDataSource()
+    
+    // MARK: - Lazy Variables -
     lazy var flowLayoutDelegate: SearchRecipeCollectionFlowDelegate = {
         return SearchRecipeCollectionFlowDelegate(forView: self.collectionView!)
     }()
     
 //    let client = EdamamAPIClient()
     
+    // MARK: - View Controller Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupSearchController()
+        setupCollectionView()
         
         self.definesPresentationContext = true
-        
-        collectionView!.dataSource = datasSource
-        collectionView!.delegate = flowLayoutDelegate
     }
     
     @objc func dismissSearchRecipeController() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Setup -
+    func setupCollectionView() {
+        collectionView!.dataSource = datasSource
+        collectionView!.delegate = flowLayoutDelegate
     }
     
     func setupSearchController() {
@@ -45,6 +52,7 @@ class SearchRecipeViewController: UICollectionViewController {
     }
 }
 
+// MARK: - Search Results Updating -
 extension SearchRecipeViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {

@@ -10,7 +10,6 @@ import UIKit
 
 class SearchRecipesDataSource: NSObject, UICollectionViewDataSource {
     
-    
     override init() {
         super.init()
     }
