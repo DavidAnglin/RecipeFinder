@@ -124,6 +124,7 @@
                             <outlet property="delegate" destination="NUn-n5-dAL" id="xrb-pY-sxX"/>
                         </connections>
                     </collectionView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="5aa-kT-zN0"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e3G-Xl-vpT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -134,10 +135,10 @@
         <scene sceneID="LzP-un-eBm">
             <objects>
                 <tableViewController id="b2C-Ql-Ijj" customClass="RecipeDetailViewController" customModule="RecipeFinder" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" sectionIndexMinimumDisplayRowCount="4" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cpu-gd-alN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" sectionIndexMinimumDisplayRowCount="4" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="cpu-gd-alN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Jb3-la-xmT">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="385"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -231,25 +232,25 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IngredientCell" rowHeight="80" id="62t-Fy-vFF" customClass="IngredientCell" customModule="RecipeFinder" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="413" width="375" height="80"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="IngredientCell" rowHeight="80" id="62t-Fy-vFF" customClass="IngredientCell" customModule="RecipeFinder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="440.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="62t-Fy-vFF" id="KQ1-z4-IA9">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="One 2-inch (5cm) piece of fresh ginger, peeled and grated" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lo0-X7-0zF">
-                                            <rect key="frame" x="5.5" y="19.5" width="363" height="41"/>
+                                            <rect key="frame" x="8" y="15" width="359" height="50"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Lo0-X7-0zF" firstAttribute="centerX" secondItem="KQ1-z4-IA9" secondAttribute="centerX" id="FUf-Ua-owN"/>
-                                        <constraint firstItem="Lo0-X7-0zF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KQ1-z4-IA9" secondAttribute="leading" id="M5k-Wl-JIX"/>
-                                        <constraint firstItem="Lo0-X7-0zF" firstAttribute="centerY" secondItem="KQ1-z4-IA9" secondAttribute="centerY" id="Q3R-H1-dlX"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Lo0-X7-0zF" secondAttribute="trailing" id="cfQ-LY-UWq"/>
+                                        <constraint firstAttribute="trailing" secondItem="Lo0-X7-0zF" secondAttribute="trailing" constant="8" id="0vb-XU-USh"/>
+                                        <constraint firstAttribute="bottom" secondItem="Lo0-X7-0zF" secondAttribute="bottom" constant="15" id="cYh-0Z-Fzc"/>
+                                        <constraint firstItem="Lo0-X7-0zF" firstAttribute="top" secondItem="KQ1-z4-IA9" secondAttribute="top" constant="15" id="jE0-DH-tZv"/>
+                                        <constraint firstItem="Lo0-X7-0zF" firstAttribute="leading" secondItem="KQ1-z4-IA9" secondAttribute="leading" constant="8" id="sqR-Bp-vLG"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -277,13 +278,20 @@
         <!--Navigation Controller-->
         <scene sceneID="iG2-RW-5MC">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Qfb-WS-1sf" sceneMemberID="viewController">
-                    <toolbarItems/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" hidesBarsWhenKeyboardAppears="YES" id="Qfb-WS-1sf" sceneMemberID="viewController">
+                    <toolbarItems>
+                        <barButtonItem enabled="NO" title="Item" image="edamam" landscapeImage="edamam" largeContentSizeImage="edamam" id="ht7-A8-Ttg"/>
+                    </toolbarItems>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RTJ-AQ-5WF">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QT5-zv-zq4">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="NUn-n5-dAL" kind="relationship" relationship="rootViewController" id="LNF-C0-uOg"/>
                     </connections>
@@ -295,5 +303,6 @@
     </scenes>
     <resources>
         <image name="chickenFingers" width="616" height="462"/>
+        <image name="edamam" width="160" height="40"/>
     </resources>
 </document>

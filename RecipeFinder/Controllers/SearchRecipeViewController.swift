@@ -27,6 +27,7 @@ class SearchRecipeViewController: UICollectionViewController {
         
         setupSearchController()
         setupCollectionView()
+        setupToolbarLogo()
         
         self.definesPresentationContext = true
     }
@@ -49,6 +50,18 @@ class SearchRecipeViewController: UICollectionViewController {
         self.navigationItem.titleView = searchController.searchBar
         
         searchController.searchBar.becomeFirstResponder()
+    }
+    
+    func setupToolbarLogo() {
+        if let logo = UIImage(named: "edamam.png")?.withRenderingMode(.alwaysOriginal) {
+            navigationController?.isToolbarHidden = false
+            var items = [UIBarButtonItem]()
+            items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
+            items.append(UIBarButtonItem(image: logo, style: .plain, target: nil, action: nil))
+            items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
+
+            toolbarItems = items
+        }
     }
 }
 
