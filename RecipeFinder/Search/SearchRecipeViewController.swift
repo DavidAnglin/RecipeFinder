@@ -11,7 +11,7 @@ import UIKit
 class SearchRecipeViewController: UICollectionViewController {
 
     // MARK: - Constants -
-    var searchController: UISearchController?
+    let searchController = UISearchController(searchResultsController: nil)
     let datasSource = SearchRecipesDataSource()
     let client = EdamamClient()
     
@@ -31,6 +31,10 @@ class SearchRecipeViewController: UICollectionViewController {
         self.definesPresentationContext = true
     }
     
+    @objc func dismissSearchRecipeController() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: - Setup -
     func setupCollectionView() {
         collectionView!.dataSource = datasSource
@@ -38,23 +42,14 @@ class SearchRecipeViewController: UICollectionViewController {
     }
     
     func setupSearchController() {
-//        self.searchController = UISearchController(searchResultsController: nil)
-//
-//        if let searchController = self.searchController {
-//            searchController.searchResultsUpdater = self
-//            searchController.searchBar.delegate = self
-//            searchController.delegate = self
-//
-//            searchController.hidesNavigationBarDuringPresentation = false
-//            searchController.dimsBackgroundDuringPresentation = false
-//            searchController.obscuresBackgroundDuringPresentation = false
-//
-////            searchController.searchBar.becomeFirstResponder()
-//
-//            self.navigationItem.titleView = searchController.searchBar
-//        }
+        self.searchController.searchBar.delegate = self
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.searchResultsUpdater = self
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.navigationItem.titleView = searchController.searchBar
         
-        
+        searchController.searchBar.becomeFirstResponder()
     }
     
     func setupToolbarLogo() {
@@ -77,10 +72,11 @@ extension SearchRecipeViewController: UISearchResultsUpdating {
     }
 }
 
+// MARK: - Search Delegate -
 extension SearchRecipeViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let text = searchController?.searchBar.text, text.characters.count > 3 {
+        if let text = searchController.searchBar.text, text.characters.count > 3 {
             client.search(withTerm: text.lowercased()) { [weak self] result in
                 
                 switch result {
@@ -93,14 +89,20 @@ extension SearchRecipeViewController: UISearchBarDelegate {
             }
         }
     }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.dismiss(animated: true, completion: nil)
+}
+
+// MARK: - Navigation -
+extension SearchRecipeViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let indexPath = self.collectionView?.indexPath(for: (sender as! UICollectionViewCell)) {
+            if segue.identifier == "showRecipeDetail" {
+                let recipe = datasSource.object(at: indexPath)
+                let recipeDetailVC = segue.destination as! RecipeDetailViewController
+                recipeDetailVC.recipe = recipe
+                recipeDetailVC.dataSource.updateData(recipe.ingredients)
+            }
+        }
     }
 }
 
-extension SearchRecipeViewController: UISearchControllerDelegate {
-    func willPresentSearchController(_ searchController: UISearchController) {
-        searchController.searchBar.becomeFirstResponder()
-    }
-}
+

@@ -41,11 +41,15 @@ class SearchRecipesDataSource: NSObject, UICollectionViewDataSource {
     }
     
     // MARK: - Helper -
+    func object(at indexPath: IndexPath) -> Recipe {
+        return data[indexPath.row]
+    }
+    
     func update(with data: [Recipe]) {
         self.data = data
     }
     
-    func recipe(at indexPath: IndexPath) -> Recipe {
-        return data[indexPath.row]
+    func update(_ object: Recipe, at indexPath: IndexPath) {
+        data[indexPath.row] = object
     }
 }

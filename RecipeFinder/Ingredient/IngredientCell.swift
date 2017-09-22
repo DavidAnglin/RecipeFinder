@@ -14,4 +14,7 @@ class IngredientCell: UITableViewCell {
     
     @IBOutlet weak var ingredientLabel: UILabel!
     
+    func configure(with viewModel: IngredientCellViewModel) {
+        ingredientLabel.text = viewModel.ingredient
+    }
 }

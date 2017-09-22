@@ -106,7 +106,6 @@ extension APIClient {
                 }
                 
                 let value = parse(json)
-                print(value)
                 if !value.isEmpty {
                     completion(.success(value))
                 } else {

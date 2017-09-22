@@ -10,6 +10,9 @@ import UIKit
 
 class RecipeDetailViewController: UITableViewController {
 
+    // MARK: - Variables -
+    var recipe: Recipe?
+    
     // MARK: - IBOutlets -
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var recipeLabel: UILabel!
@@ -19,11 +22,11 @@ class RecipeDetailViewController: UITableViewController {
     
     // MARK: - IBActions -
     @IBAction func goToFullRecipe(_ sender: UIButton) {
-    
+        
     }
     
     lazy var dataSource: RecipeDetailDataSource = {
-        return RecipeDetailDataSource()
+        return RecipeDetailDataSource(ingredientData: [])
     }()
     
     // MARK: - View Controller Lifecycle -
@@ -31,7 +34,10 @@ class RecipeDetailViewController: UITableViewController {
         super.viewDidLoad()
         
         setupTableView()
-        self.definesPresentationContext = true
+        
+        if let recipe = recipe, let viewModel = RecipeDetailCellViewModel(recipe: recipe) {
+            configure(with: viewModel)
+        }
     }
     
     func setupTableView() {
@@ -39,5 +45,16 @@ class RecipeDetailViewController: UITableViewController {
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
+    }
+    
+    /// Configures the views in the table view's header view
+    ///
+    /// - Parameter viewModel: View model representation of a YelpBusiness object
+    func configure(with viewModel: RecipeDetailCellViewModel) {
+        recipeImage.image = #imageLiteral(resourceName: "chickenFingers")
+        recipeLabel.text = viewModel.recipeLabel
+        recipeLink.setTitle(viewModel.recipeLink, for: .normal)
+        calorieLabel.text = viewModel.calorieLabel
+        servingLabel.text = viewModel.servingLabel
     }
 }

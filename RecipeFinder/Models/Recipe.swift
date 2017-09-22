@@ -16,10 +16,9 @@ class Recipe: NSObject, JSONDecodable {
     let recipeSourceURLString: String
     let calories: Double
     let servings: Int
-    let ingredients: Ingredients
+    let ingredients: [Ingredient]
     
     required init?(json: [String : Any]) {
-//        print(json)
         guard let recipe = json["recipe"] as? [String: Any],
             let recipeName = recipe["label"] as? String,
             let recipeImageURLString = recipe["image"] as? String,
@@ -35,7 +34,7 @@ class Recipe: NSObject, JSONDecodable {
         self.recipeSourceURLString = recipeSourceURLString
         self.calories = calories
         self.servings = servings
-        self.ingredients = Ingredients(withIngredients: ingredientArray)
+        self.ingredients = ingredientArray.flatMap { Ingredient(withIngredient: $0) }
         
         super.init()
     }
