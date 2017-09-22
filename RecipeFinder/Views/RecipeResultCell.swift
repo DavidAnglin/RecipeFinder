@@ -20,7 +20,7 @@ class RecipeResultCell: UICollectionViewCell {
     @IBOutlet weak var ingredientCountLabel: UILabel!
     
     func configure(with viewModel: RecipeCellViewModel) {
-//        recipeImage.image = viewModel.recipeImage
+        recipeImage.image = viewModel.recipeImage
         recipeNameLabel.text = viewModel.recipeNameLabel
         calorieCountLabel.text = viewModel.calorieCountLabel
         ingredientCountLabel.text = viewModel.ingredientCountLabel

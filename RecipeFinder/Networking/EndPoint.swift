@@ -1,0 +1,89 @@
+//
+//  EndPoint.swift
+//  RecipeFinder
+//
+//  Created by David Anglin on 9/21/17.
+//  Copyright © 2017 David Anglin. All rights reserved.
+//
+
+import Foundation
+
+/// A type that provides URLRequests for defined API endpoints
+protocol Endpoint {
+    /// Returns the base URL for the API as a string
+    var base: String { get }
+    /// Returns the URL path for an endpoint, as a string
+    var path: String { get }
+    /// Returns the URL parameters for a given endpoint as an array of URLQueryItem
+    /// values
+    var queryItems: [URLQueryItem] { get }
+}
+
+// MARK: - Credential Struct -
+fileprivate struct Credentials {
+    static let appId = "24cbac83"
+    static let appKey = "68abd38306b696ae08177c925e7b3dac"
+}
+
+fileprivate struct Keys {
+    static let appId = "app_id"
+    static let appKey = "app_key"
+    static let limit = "to"
+}
+
+extension Endpoint {
+    /// Returns an instance of URLComponents containing the base URL, path and
+    /// query items provided
+    var urlComponents: URLComponents {
+        var components = URLComponents(string: base)!
+        components.path = path
+        components.queryItems = queryItems
+        
+        return components
+    }
+    
+    /// Returns an instance of URLRequest encapsulating the endpoint URL. This
+    /// URL is obtained through the `urlComponents` object.
+    var request: URLRequest {
+        let url = urlComponents.url!
+        return URLRequest(url: url)
+    }
+}
+
+enum Edamam {
+    case search(term: String, limit: Int)
+}
+
+extension Edamam: Endpoint {
+    var base: String {
+        return "https://api.edamam.com"
+    }
+    
+    var path: String {
+        switch self {
+        case .search: return "/search"
+        }
+    }
+    
+    var queryItems: [URLQueryItem] {
+        switch self {
+        case .search(let term, let limit):
+            var result = [URLQueryItem]()
+            
+            let searchTermItem = URLQueryItem(name: "q", value: term)
+            result.append(searchTermItem)
+            
+            let appId = URLQueryItem(name: Keys.appId, value: Credentials.appId)
+            result.append(appId)
+            
+            let appKey = URLQueryItem(name: Keys.appKey, value: Credentials.appKey)
+            result.append(appKey)
+            
+            let limit = URLQueryItem(name: Keys.limit, value: limit.description)
+            result.append(limit)
+            
+            return result
+        }
+    }
+}
+

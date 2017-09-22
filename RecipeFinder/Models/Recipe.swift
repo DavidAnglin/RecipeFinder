@@ -8,24 +8,26 @@
 
 import Foundation
 
-class Recipe: JSONDecodable {
+class Recipe: NSObject, JSONDecodable {
     
     let recipeName: String
     let recipeImageURLString: String
     let recipeSource: String
     let recipeSourceURLString: String
-    let calories: Int
+    let calories: Double
     let servings: Int
     let ingredients: Ingredients
     
     required init?(json: [String : Any]) {
-        guard let recipeName = json["label"] as? String,
-            let recipeImageURLString = json["image"] as? String,
-            let recipeSource = json["source"] as? String,
-            let recipeSourceURLString = json["url"] as? String,
-            let calories = json["calories"] as? Int,
-            let servings = json["yield"] as? Int,
-            let ingredientArray = json["ingredientLines"] as? [String] else { return nil }
+//        print(json)
+        guard let recipe = json["recipe"] as? [String: Any],
+            let recipeName = recipe["label"] as? String,
+            let recipeImageURLString = recipe["image"] as? String,
+            let recipeSource = recipe["source"] as? String,
+            let recipeSourceURLString = recipe["url"] as? String,
+            let calories = recipe["calories"] as? Double,
+            let servings = recipe["yield"] as? Int,
+            let ingredientArray = recipe["ingredientLines"] as? [String] else { return nil }
         
         self.recipeName = recipeName
         self.recipeImageURLString = recipeImageURLString
@@ -34,5 +36,7 @@ class Recipe: JSONDecodable {
         self.calories = calories
         self.servings = servings
         self.ingredients = Ingredients(withIngredients: ingredientArray)
+        
+        super.init()
     }
 }

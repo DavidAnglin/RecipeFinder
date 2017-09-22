@@ -11,16 +11,15 @@ import UIKit
 class SearchRecipeViewController: UICollectionViewController {
 
     // MARK: - Constants -
-    let searchController = UISearchController(searchResultsController: nil)
+    var searchController: UISearchController?
     let datasSource = SearchRecipesDataSource()
+    let client = EdamamClient()
     
     // MARK: - Lazy Variables -
     lazy var flowLayoutDelegate: SearchRecipeCollectionFlowDelegate = {
         return SearchRecipeCollectionFlowDelegate(forView: self.collectionView!)
     }()
-    
-//    let client = EdamamAPIClient()
-    
+
     // MARK: - View Controller Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +31,6 @@ class SearchRecipeViewController: UICollectionViewController {
         self.definesPresentationContext = true
     }
     
-    @objc func dismissSearchRecipeController() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     // MARK: - Setup -
     func setupCollectionView() {
         collectionView!.dataSource = datasSource
@@ -43,13 +38,23 @@ class SearchRecipeViewController: UICollectionViewController {
     }
     
     func setupSearchController() {
-        self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.obscuresBackgroundDuringPresentation = false
-        self.searchController.searchResultsUpdater = self
-        self.searchController.dimsBackgroundDuringPresentation = false
-        self.navigationItem.titleView = searchController.searchBar
+//        self.searchController = UISearchController(searchResultsController: nil)
+//
+//        if let searchController = self.searchController {
+//            searchController.searchResultsUpdater = self
+//            searchController.searchBar.delegate = self
+//            searchController.delegate = self
+//
+//            searchController.hidesNavigationBarDuringPresentation = false
+//            searchController.dimsBackgroundDuringPresentation = false
+//            searchController.obscuresBackgroundDuringPresentation = false
+//
+////            searchController.searchBar.becomeFirstResponder()
+//
+//            self.navigationItem.titleView = searchController.searchBar
+//        }
         
-        searchController.searchBar.becomeFirstResponder()
+        
     }
     
     func setupToolbarLogo() {
@@ -69,6 +74,33 @@ class SearchRecipeViewController: UICollectionViewController {
 extension SearchRecipeViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-       
+    }
+}
+
+extension SearchRecipeViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchController?.searchBar.text, text.characters.count > 3 {
+            client.search(withTerm: text.lowercased()) { [weak self] result in
+                
+                switch result {
+                case .success(let recipes):
+                    self?.datasSource.update(with: recipes)
+                    self?.collectionView?.reloadData()
+                case .failure(let error):
+                    print("here: \(error)")
+                }
+            }
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension SearchRecipeViewController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.becomeFirstResponder()
     }
 }

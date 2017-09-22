@@ -11,7 +11,7 @@ import UIKit
 
 struct RecipeCellViewModel {
     
-//    let recipeImage: UIImage
+    let recipeImage: UIImage
     let recipeNameLabel: String
     let calorieCountLabel: String
     let ingredientCountLabel: String
@@ -21,14 +21,14 @@ extension RecipeCellViewModel {
     init(recipe: Recipe) {
 
         // TODO: - Do Recipe Image -
+        self.recipeImage = #imageLiteral(resourceName: "chickenFingers")
         self.recipeNameLabel = recipe.recipeName
         
-        let calories = recipe.calories
+        let calories = Int(recipe.calories)
         let servingCount = recipe.servings
         
         self.calorieCountLabel = String(calories/servingCount)
         self.ingredientCountLabel = String(recipe.servings)
-        
     }
 }
 

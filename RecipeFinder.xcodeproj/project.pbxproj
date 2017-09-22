@@ -10,6 +10,10 @@
 		2E32B7991F7319BA008FE2BF /* IngredientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E32B7981F7319BA008FE2BF /* IngredientCell.swift */; };
 		2E32B79B1F731BB2008FE2BF /* RecipeDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E32B79A1F731BB2008FE2BF /* RecipeDetailDataSource.swift */; };
 		2E32B79D1F73200E008FE2BF /* RecipeDetailCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E32B79C1F73200E008FE2BF /* RecipeDetailCellViewModel.swift */; };
+		2E32B79F1F741A89008FE2BF /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E32B79E1F741A89008FE2BF /* EndPoint.swift */; };
+		2E32B7A11F741A98008FE2BF /* EdamamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E32B7A01F741A98008FE2BF /* EdamamClient.swift */; };
+		2E32B7A31F741DCD008FE2BF /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E32B7A21F741DCD008FE2BF /* Result.swift */; };
+		2E32B7A51F741F8A008FE2BF /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E32B7A41F741F8A008FE2BF /* APIClient.swift */; };
 		2E88027E1F72F6B9008BD71B /* RecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88027D1F72F6B9008BD71B /* RecipeDetailViewController.swift */; };
 		2E8802831F72FFB5008BD71B /* RecipeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8802821F72FFB5008BD71B /* RecipeCellViewModel.swift */; };
 		2E8802851F730082008BD71B /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8802841F730082008BD71B /* Recipe.swift */; };
@@ -29,6 +33,10 @@
 		2E32B7981F7319BA008FE2BF /* IngredientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCell.swift; sourceTree = "<group>"; };
 		2E32B79A1F731BB2008FE2BF /* RecipeDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailDataSource.swift; sourceTree = "<group>"; };
 		2E32B79C1F73200E008FE2BF /* RecipeDetailCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailCellViewModel.swift; sourceTree = "<group>"; };
+		2E32B79E1F741A89008FE2BF /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		2E32B7A01F741A98008FE2BF /* EdamamClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamClient.swift; sourceTree = "<group>"; };
+		2E32B7A21F741DCD008FE2BF /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		2E32B7A41F741F8A008FE2BF /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		2E88027D1F72F6B9008BD71B /* RecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewController.swift; sourceTree = "<group>"; };
 		2E8802821F72FFB5008BD71B /* RecipeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCellViewModel.swift; sourceTree = "<group>"; };
 		2E8802841F730082008BD71B /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
@@ -148,6 +156,10 @@
 			isa = PBXGroup;
 			children = (
 				2E8802881F730D9F008BD71B /* JSONDecodable.swift */,
+				2E32B79E1F741A89008FE2BF /* EndPoint.swift */,
+				2E32B7A01F741A98008FE2BF /* EdamamClient.swift */,
+				2E32B7A21F741DCD008FE2BF /* Result.swift */,
+				2E32B7A41F741F8A008FE2BF /* APIClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -193,6 +205,7 @@
 				TargetAttributes = {
 					2E8EF03D1F71649F00D42B09 = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -234,17 +247,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E8EF0651F717DB300D42B09 /* RecipeResultCell.swift in Sources */,
+				2E32B7A51F741F8A008FE2BF /* APIClient.swift in Sources */,
 				2E8802891F730D9F008BD71B /* JSONDecodable.swift in Sources */,
 				2E8EF0621F71784600D42B09 /* SearchRecipesDataSource.swift in Sources */,
 				2E8802871F7300B5008BD71B /* Ingredients.swift in Sources */,
 				2E8EF0671F717F2700D42B09 /* SearchRecipeCollectionFlowDelegate.swift in Sources */,
 				2E32B79B1F731BB2008FE2BF /* RecipeDetailDataSource.swift in Sources */,
+				2E32B7A31F741DCD008FE2BF /* Result.swift in Sources */,
+				2E32B7A11F741A98008FE2BF /* EdamamClient.swift in Sources */,
 				2E32B79D1F73200E008FE2BF /* RecipeDetailCellViewModel.swift in Sources */,
 				2E8802831F72FFB5008BD71B /* RecipeCellViewModel.swift in Sources */,
 				2E32B7991F7319BA008FE2BF /* IngredientCell.swift in Sources */,
 				2E8EF05B1F7168E700D42B09 /* SearchRecipeViewController.swift in Sources */,
 				2E88027E1F72F6B9008BD71B /* RecipeDetailViewController.swift in Sources */,
 				2E8EF0421F71649F00D42B09 /* AppDelegate.swift in Sources */,
+				2E32B79F1F741A89008FE2BF /* EndPoint.swift in Sources */,
 				2E8802851F730082008BD71B /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -370,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -385,10 +402,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 98KAY253SB;
 				INFOPLIST_FILE = "$(SRCROOT)/RecipeFinder/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidanglin.RecipeFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -400,10 +418,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 98KAY253SB;
 				INFOPLIST_FILE = "$(SRCROOT)/RecipeFinder/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.davidanglin.RecipeFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
