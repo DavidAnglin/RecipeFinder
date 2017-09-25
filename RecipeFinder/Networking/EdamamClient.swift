@@ -22,6 +22,7 @@ class EdamamClient: APIClient {
         self.init(configuration: .default)
     }
     
+    // MARK: - Search Method -
     typealias completionHandler = (Result<[Recipe], APIError>) -> Void
     
     func search(withTerm term: String = "chicken", withLimit limit: Int = 50, completion: @escaping completionHandler) {

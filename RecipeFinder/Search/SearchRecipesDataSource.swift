@@ -10,14 +10,15 @@ import UIKit
 
 class SearchRecipesDataSource: NSObject, UICollectionViewDataSource {
     
+    // MARK: - Variables -
     private var data = [Recipe]()
     
+    // MARK: - Init -
     override init() {
         super.init()
     }
     
     // MARK: - Data Source -
-
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

@@ -12,6 +12,7 @@ class RecipeDetailViewController: UITableViewController {
 
     // MARK: - Variables -
     var recipe: Recipe?
+    var recipeURL: URL?
     
     // MARK: - IBOutlets -
     @IBOutlet weak var recipeImage: UIImageView!
@@ -22,7 +23,11 @@ class RecipeDetailViewController: UITableViewController {
     
     // MARK: - IBActions -
     @IBAction func goToFullRecipe(_ sender: UIButton) {
-        
+        if let recipeURL = recipe?.recipeSourceURLString {
+            self.recipeURL = URL(string: recipeURL)
+        } else {
+            // TODO: Add Alert Message
+        }
     }
     
     lazy var dataSource: RecipeDetailDataSource = {
@@ -34,6 +39,7 @@ class RecipeDetailViewController: UITableViewController {
         super.viewDidLoad()
         
         setupTableView()
+        setupToolbarLogo()
         
         if let recipe = recipe, let viewModel = RecipeDetailCellViewModel(recipe: recipe) {
             configure(with: viewModel)
@@ -47,6 +53,18 @@ class RecipeDetailViewController: UITableViewController {
         tableView.estimatedRowHeight = 100
     }
     
+    func setupToolbarLogo() {
+        if let logo = UIImage(named: "edamam.png")?.withRenderingMode(.alwaysOriginal) {
+            navigationController?.isToolbarHidden = false
+            var items = [UIBarButtonItem]()
+            items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
+            items.append(UIBarButtonItem(image: logo, style: .plain, target: nil, action: nil))
+            items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
+            
+            toolbarItems = items
+        }
+    }
+    
     /// Configures the views in the table view's header view
     ///
     /// - Parameter viewModel: View model representation of a YelpBusiness object
@@ -57,4 +75,17 @@ class RecipeDetailViewController: UITableViewController {
         calorieLabel.text = viewModel.calorieLabel
         servingLabel.text = viewModel.servingLabel
     }
+}
+
+// MARK: - Navigation -
+extension RecipeDetailViewController {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toWebRecipe" {
+            let webViewReipeVC = segue.destination as! RecipeWebViewController
+            webViewReipeVC.recipeURL = recipeURL
+        }
+    }
+    
+    
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - Endpoint Protocol -
 /// A type that provides URLRequests for defined API endpoints
 protocol Endpoint {
     /// Returns the base URL for the API as a string
@@ -17,18 +18,6 @@ protocol Endpoint {
     /// Returns the URL parameters for a given endpoint as an array of URLQueryItem
     /// values
     var queryItems: [URLQueryItem] { get }
-}
-
-// MARK: - Credential Struct -
-fileprivate struct Credentials {
-    static let appId = "24cbac83"
-    static let appKey = "68abd38306b696ae08177c925e7b3dac"
-}
-
-fileprivate struct Keys {
-    static let appId = "app_id"
-    static let appKey = "app_key"
-    static let limit = "to"
 }
 
 extension Endpoint {
@@ -50,6 +39,19 @@ extension Endpoint {
     }
 }
 
+// MARK: - Credential Struct -
+fileprivate struct Credentials {
+    static let appId = "24cbac83"
+    static let appKey = "68abd38306b696ae08177c925e7b3dac"
+}
+
+fileprivate struct Keys {
+    static let appId = "app_id"
+    static let appKey = "app_key"
+    static let limit = "to"
+}
+
+// MARK: - Edamam Enum -
 enum Edamam {
     case search(term: String, limit: Int)
 }

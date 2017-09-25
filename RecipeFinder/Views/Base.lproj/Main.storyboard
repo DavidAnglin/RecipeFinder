@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -172,6 +173,7 @@
                                                     </state>
                                                     <connections>
                                                         <action selector="goToFullRecipe:" destination="b2C-Ql-Ijj" eventType="touchUpInside" id="WM1-az-lbc"/>
+                                                        <segue destination="zIn-XZ-Mgh" kind="show" identifier="toWebRecipe" id="Pqg-dE-akE"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -275,6 +277,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G8m-PT-tvt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1384.8" y="-0.44977511244377816"/>
+        </scene>
+        <!--Recipe Web View Controller-->
+        <scene sceneID="COF-sJ-wcs">
+            <objects>
+                <viewController id="zIn-XZ-Mgh" customClass="RecipeWebViewController" customModule="RecipeFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Cc-cf-sk4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="XYM-oN-2ox">
+                                <rect key="frame" x="0.0" y="64" width="375" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="lYg-EG-k8k"/>
+                                </constraints>
+                            </progressView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XYM-oN-2ox" firstAttribute="leading" secondItem="jnS-Qy-9w0" secondAttribute="leading" id="1HI-gY-ClJ"/>
+                            <constraint firstItem="jnS-Qy-9w0" firstAttribute="trailing" secondItem="XYM-oN-2ox" secondAttribute="trailing" id="cGv-Fb-auf"/>
+                            <constraint firstItem="XYM-oN-2ox" firstAttribute="top" secondItem="jnS-Qy-9w0" secondAttribute="top" id="g5n-XW-Qqo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="jnS-Qy-9w0"/>
+                    </view>
+                    <connections>
+                        <outlet property="progBar" destination="XYM-oN-2ox" id="ejJ-0a-YCQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UKF-S4-8HM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2322" y="0.0"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iG2-RW-5MC">

@@ -10,14 +10,17 @@ import UIKit
 
 class SearchRecipeCollectionFlowDelegate: NSObject, UICollectionViewDelegateFlowLayout {
 
+    // MARK: - Constants -
     fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
     fileprivate let itemsPerRow: CGFloat = 2
     let collectionView: UICollectionView
     
+    // MARK: - Init -
     init(forView collectionView: UICollectionView) {
         self.collectionView = collectionView
     }
     
+    // MARK: - Delegate Methods -
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)

@@ -10,8 +10,10 @@ import UIKit
 
 class RecipeDetailDataSource: NSObject, UITableViewDataSource {
 
+    // MARK: - Stored Properties -
     var ingredientData: [Ingredient]
     
+    // MARK: - Init -
     init(ingredientData: [Ingredient]) {
         self.ingredientData = ingredientData
     }
