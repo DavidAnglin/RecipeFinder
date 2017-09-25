@@ -13,7 +13,7 @@ struct RecipeDetailCellViewModel {
     
     let recipeImage: UIImage
     let recipeLabel: String
-    let recipeLink: String
+    let recipeLink: NSAttributedString
     let calorieLabel: String
     let servingLabel: String
 }
@@ -23,7 +23,11 @@ extension RecipeDetailCellViewModel {
         
         self.recipeImage = #imageLiteral(resourceName: "chickenFingers")
         self.recipeLabel = recipe.recipeName
-        self.recipeLink = recipe.recipeSource
+        
+        let text = recipe.recipeSource
+        let attributedRecipe = NSAttributedString(string: text, attributes:
+            [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue])
+        self.recipeLink =  attributedRecipe
         
         let calories = Int(recipe.calories)
         self.calorieLabel = String(calories/recipe.servings)

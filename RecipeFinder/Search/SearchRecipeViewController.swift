@@ -15,6 +15,9 @@ class SearchRecipeViewController: UICollectionViewController {
     let datasSource = SearchRecipesDataSource()
     let client = EdamamClient()
     
+    // MARK: - IBOutlets -
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+   
     // MARK: - Lazy Variables -
     lazy var flowLayoutDelegate: SearchRecipeCollectionFlowDelegate = {
         return SearchRecipeCollectionFlowDelegate(forView: self.collectionView!)
@@ -23,6 +26,8 @@ class SearchRecipeViewController: UICollectionViewController {
     // MARK: - View Controller Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.hidesWhenStopped = true
         
         setupSearchController()
         setupCollectionView()
@@ -47,6 +52,7 @@ class SearchRecipeViewController: UICollectionViewController {
         self.searchController.obscuresBackgroundDuringPresentation = false
         self.searchController.searchResultsUpdater = self
         self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.searchBar.placeholder = "Search For Recipes"
         self.navigationItem.titleView = searchController.searchBar
         
         searchController.searchBar.becomeFirstResponder()
@@ -76,14 +82,18 @@ extension SearchRecipeViewController: UISearchResultsUpdating {
 extension SearchRecipeViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        activityIndicator.startAnimating()
         if let text = searchController.searchBar.text, text.characters.count > 3 {
             client.search(withTerm: text.lowercased()) { [weak self] result in
                 
                 switch result {
                 case .success(let recipes):
                     self?.datasSource.update(with: recipes)
+                    self?.activityIndicator.stopAnimating()
                     self?.collectionView?.reloadData()
                 case .failure(let error):
+                    self?.activityIndicator.stopAnimating()
                     print("here: \(error)")
                 }
             }

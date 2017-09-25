@@ -48,6 +48,7 @@ class RecipeDetailViewController: UITableViewController {
     
     func setupTableView() {
         tableView.dataSource = dataSource
+        tableView.delegate = self
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
@@ -71,9 +72,25 @@ class RecipeDetailViewController: UITableViewController {
     func configure(with viewModel: RecipeDetailCellViewModel) {
         recipeImage.image = #imageLiteral(resourceName: "chickenFingers")
         recipeLabel.text = viewModel.recipeLabel
-        recipeLink.setTitle(viewModel.recipeLink, for: .normal)
+        recipeLink.setTitleColor(UIColor.white, for: .normal)
+        recipeLink.setAttributedTitle(viewModel.recipeLink, for: .normal)
         calorieLabel.text = viewModel.calorieLabel
         servingLabel.text = viewModel.servingLabel
+    }
+}
+
+// MARK: - TableView Delegate -
+extension RecipeDetailViewController {
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 65.0
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as? UITableViewHeaderFooterView
+        header?.textLabel?.font = UIFont(name: "System", size: 20.0)
+        header?.textLabel?.textAlignment = .left
+        header?.textLabel?.textColor = UIColor.white
     }
 }
 
@@ -86,6 +103,4 @@ extension RecipeDetailViewController {
             webViewReipeVC.recipeURL = recipeURL
         }
     }
-    
-    
 }
