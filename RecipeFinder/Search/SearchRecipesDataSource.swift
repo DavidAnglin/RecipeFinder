@@ -13,9 +13,13 @@ class SearchRecipesDataSource: NSObject, UICollectionViewDataSource {
     // MARK: - Variables -
     private var data = [Recipe]()
     
+    // MARK: - Constants -
+    let pendingOperations = PendingOperations()
+    let collectionView: UICollectionView
+    
     // MARK: - Init -
-    override init() {
-        super.init()
+    init(collectionView: UICollectionView) {
+        self.collectionView = collectionView
     }
     
     // MARK: - Data Source -
@@ -35,6 +39,10 @@ class SearchRecipesDataSource: NSObject, UICollectionViewDataSource {
             
             recipeCell.configure(with: viewModel)
             
+            if recipe.artworkState == .placeholder {
+                downloadImageForRecipe(recipe, atIndexPath: indexPath)
+            }
+            
             return recipeCell
         }
         
@@ -52,5 +60,27 @@ class SearchRecipesDataSource: NSObject, UICollectionViewDataSource {
     
     func update(_ object: Recipe, at indexPath: IndexPath) {
         data[indexPath.row] = object
+    }
+    
+    func downloadImageForRecipe(_ recipe: Recipe, atIndexPath indexPath: IndexPath) {
+        if let _ = pendingOperations.downloadsInProgress[indexPath] {
+            return
+        }
+        
+        let downloader = ImageDownloader(recipe: recipe)
+        
+        downloader.completionBlock = {
+            if downloader.isCancelled {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
+                self.collectionView.reloadItems(at: [indexPath])
+            }
+        }
+        
+        pendingOperations.downloadsInProgress[indexPath] = downloader
+        pendingOperations.downloadQueue.addOperation(downloader)
     }
 }

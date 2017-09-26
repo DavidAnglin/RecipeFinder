@@ -7,6 +7,13 @@
 //
 
 import Foundation
+import UIKit
+
+enum RecipeImageState {
+    case placeholder
+    case downloaded
+    case failed
+}
 
 class Recipe: NSObject, JSONDecodable {
     
@@ -17,6 +24,8 @@ class Recipe: NSObject, JSONDecodable {
     let calories: Double
     let servings: Int
     let ingredients: [Ingredient]
+    var recipeImage: UIImage?
+    var artworkState = RecipeImageState.placeholder
     
     required init?(json: [String : Any]) {
         guard let recipe = json["recipe"] as? [String: Any],

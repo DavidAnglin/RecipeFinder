@@ -46,12 +46,8 @@ class RecipeDetailDataSource: NSObject, UITableViewDataSource {
     }
     
     // MARK: - Helpers -
-    func update(_ object: Ingredient, at indexPath: IndexPath) {
-        ingredientData[indexPath.row] = object
-    }
-    
-    func updateData(_ data: [Ingredient]) {
-        self.ingredientData = data
+    func update(with ingredients: [Ingredient]) {
+        self.ingredientData = ingredients
     }
     
     func object(at indexPath: IndexPath) -> Ingredient {

@@ -20,8 +20,7 @@ struct RecipeCellViewModel {
 extension RecipeCellViewModel {
     init(recipe: Recipe) {
 
-        // TODO: - Do Recipe Image -
-        self.recipeImage = #imageLiteral(resourceName: "chickenFingers")
+        self.recipeImage = recipe.artworkState == .downloaded ? recipe.recipeImage! : #imageLiteral(resourceName: "chickenFingers")
         self.recipeNameLabel = recipe.recipeName
         
         let calories = Int(recipe.calories)

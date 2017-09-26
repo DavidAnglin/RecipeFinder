@@ -14,6 +14,9 @@ class RecipeDetailViewController: UITableViewController {
     var recipe: Recipe?
     var recipeURL: URL?
     
+    // MARK: - Constants -
+    let pendingOperations = PendingOperations()
+    
     // MARK: - IBOutlets -
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var recipeLabel: UILabel!
@@ -30,6 +33,7 @@ class RecipeDetailViewController: UITableViewController {
         }
     }
     
+    // MARK: - Lazy Variables -
     lazy var dataSource: RecipeDetailDataSource = {
         return RecipeDetailDataSource(ingredientData: [])
     }()
@@ -46,6 +50,7 @@ class RecipeDetailViewController: UITableViewController {
         }
     }
     
+    // MARK: - Setup -
     func setupTableView() {
         tableView.dataSource = dataSource
         tableView.delegate = self
@@ -66,16 +71,43 @@ class RecipeDetailViewController: UITableViewController {
         }
     }
     
-    /// Configures the views in the table view's header view
-    ///
-    /// - Parameter viewModel: View model representation of a YelpBusiness object
+    // MARK: - Configure Header View -
     func configure(with viewModel: RecipeDetailCellViewModel) {
-        recipeImage.image = #imageLiteral(resourceName: "chickenFingers")
+        
         recipeLabel.text = viewModel.recipeLabel
         recipeLink.setTitleColor(UIColor.white, for: .normal)
         recipeLink.setAttributedTitle(viewModel.recipeLink, for: .normal)
         calorieLabel.text = viewModel.calorieLabel
         servingLabel.text = viewModel.servingLabel
+
+        if recipe?.artworkState == .placeholder {
+            downloadImageForRecipe(recipe!, inView: recipeImage)
+        } else {
+            recipeImage.image = recipe?.recipeImage
+        }
+    }
+    
+    // MARK: - Download Image -
+    func downloadImageForRecipe(_ recipe: Recipe, inView view: UIImageView) {
+        if let _ = pendingOperations.downloadsInRecipeDetailView[view] {
+            return
+        }
+        
+        let downloader = ImageDownloader(recipe: recipe)
+        
+        downloader.completionBlock = {
+            if downloader.isCancelled {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.pendingOperations.downloadsInRecipeDetailView.removeValue(forKey: view)
+                self.recipeImage.image = recipe.recipeImage
+            }
+        }
+        
+        pendingOperations.downloadsInRecipeDetailView[view] = downloader
+        pendingOperations.downloadQueue.addOperation(downloader)
     }
 }
 

@@ -21,7 +21,7 @@ struct RecipeDetailCellViewModel {
 extension RecipeDetailCellViewModel {
     init?(recipe: Recipe) {
         
-        self.recipeImage = #imageLiteral(resourceName: "chickenFingers")
+        self.recipeImage = recipe.artworkState == .downloaded ? recipe.recipeImage! : #imageLiteral(resourceName: "chickenFingers")
         self.recipeLabel = recipe.recipeName
         
         let text = recipe.recipeSource

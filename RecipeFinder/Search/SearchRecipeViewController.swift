@@ -12,7 +12,6 @@ class SearchRecipeViewController: UICollectionViewController {
 
     // MARK: - Constants -
     let searchController = UISearchController(searchResultsController: nil)
-    let datasSource = SearchRecipesDataSource()
     let client = EdamamClient()
     
     // MARK: - IBOutlets -
@@ -21,6 +20,10 @@ class SearchRecipeViewController: UICollectionViewController {
     // MARK: - Lazy Variables -
     lazy var flowLayoutDelegate: SearchRecipeCollectionFlowDelegate = {
         return SearchRecipeCollectionFlowDelegate(forView: self.collectionView!)
+    }()
+    
+    lazy var dataSource: SearchRecipesDataSource = {
+        return SearchRecipesDataSource(collectionView: self.collectionView!)
     }()
 
     // MARK: - View Controller Lifecycle -
@@ -42,7 +45,7 @@ class SearchRecipeViewController: UICollectionViewController {
     
     // MARK: - Setup -
     func setupCollectionView() {
-        collectionView!.dataSource = datasSource
+        collectionView!.dataSource = dataSource
         collectionView!.delegate = flowLayoutDelegate
     }
     
@@ -89,7 +92,7 @@ extension SearchRecipeViewController: UISearchBarDelegate {
                 
                 switch result {
                 case .success(let recipes):
-                    self?.datasSource.update(with: recipes)
+                    self?.dataSource.update(with: recipes)
                     self?.activityIndicator.stopAnimating()
                     self?.collectionView?.reloadData()
                 case .failure(let error):
@@ -106,10 +109,10 @@ extension SearchRecipeViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = self.collectionView?.indexPath(for: (sender as! UICollectionViewCell)) {
             if segue.identifier == "showRecipeDetail" {
-                let recipe = datasSource.object(at: indexPath)
+                let recipe = dataSource.object(at: indexPath)
                 let recipeDetailVC = segue.destination as! RecipeDetailViewController
                 recipeDetailVC.recipe = recipe
-                recipeDetailVC.dataSource.updateData(recipe.ingredients)
+                recipeDetailVC.dataSource.update(with: recipe.ingredients)
             }
         }
     }
