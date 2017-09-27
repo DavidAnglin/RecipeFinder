@@ -8,22 +8,27 @@
 
 import UIKit
 
-class SearchRecipeViewController: UICollectionViewController {
+class SearchRecipeViewController: UIViewController {
 
     // MARK: - Constants -
-    let searchController = UISearchController(searchResultsController: nil)
     let client = EdamamClient()
+    
+    // MARK: - Variables -
+    var searchController: UISearchController!
     
     // MARK: - IBOutlets -
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-   
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBarPlaceholder: UIView!
+    
     // MARK: - Lazy Variables -
     lazy var flowLayoutDelegate: SearchRecipeCollectionFlowDelegate = {
-        return SearchRecipeCollectionFlowDelegate(forView: self.collectionView!)
+        return SearchRecipeCollectionFlowDelegate(forView: self.collectionView)
     }()
     
     lazy var dataSource: SearchRecipesDataSource = {
-        return SearchRecipesDataSource(collectionView: self.collectionView!)
+        return SearchRecipesDataSource(collectionView: self.collectionView)
     }()
 
     // MARK: - View Controller Lifecycle -
@@ -32,33 +37,26 @@ class SearchRecipeViewController: UICollectionViewController {
         
         activityIndicator.hidesWhenStopped = true
         
-        setupSearchController()
+        setupSearchBar()
         setupCollectionView()
         setupToolbarLogo()
-        
-        self.definesPresentationContext = true
-    }
-    
-    @objc func dismissSearchRecipeController() {
-        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Setup -
-    func setupCollectionView() {
-        collectionView!.dataSource = dataSource
-        collectionView!.delegate = flowLayoutDelegate
+    func setupSearchBar() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+        searchController.delegate = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        searchBarPlaceholder.addSubview(searchController.searchBar)
+        automaticallyAdjustsScrollViewInsets = false
+        definesPresentationContext = true
     }
     
-    func setupSearchController() {
-        self.searchController.searchBar.delegate = self
-        self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.obscuresBackgroundDuringPresentation = false
-        self.searchController.searchResultsUpdater = self
-        self.searchController.dimsBackgroundDuringPresentation = false
-        self.searchController.searchBar.placeholder = "Search For Recipes"
-        self.navigationItem.titleView = searchController.searchBar
-        
-        searchController.searchBar.becomeFirstResponder()
+    func setupCollectionView() {
+        collectionView.dataSource = dataSource
+        collectionView.delegate = flowLayoutDelegate
     }
     
     func setupToolbarLogo() {
@@ -74,20 +72,13 @@ class SearchRecipeViewController: UICollectionViewController {
     }
 }
 
-// MARK: - Search Results Updating -
-extension SearchRecipeViewController: UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-    }
-}
-
-// MARK: - Search Delegate -
+// MARK: - Search Bar Delegate -
 extension SearchRecipeViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         activityIndicator.startAnimating()
-        if let text = searchController.searchBar.text, text.characters.count > 3 {
+        if let text = searchBar.text, text.characters.count > 3 {
             client.search(withTerm: text.lowercased()) { [weak self] result in
                 
                 switch result {
@@ -101,6 +92,24 @@ extension SearchRecipeViewController: UISearchBarDelegate {
                 }
             }
         }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.isToolbarHidden = false
+    }
+}
+
+// MARK: - Search Controller Delegate -
+extension SearchRecipeViewController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.isToolbarHidden = false
+    }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.isToolbarHidden = false
     }
 }
 
